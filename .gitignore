@@ -1,2 +1,3 @@
-/dist
-/[nN]ode_[mM]odules
+/node_modules
+/semantic
+*.log
