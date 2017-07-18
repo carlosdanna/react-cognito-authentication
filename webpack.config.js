@@ -20,7 +20,7 @@ module.exports = {
                 use: ['babel-loader']
             },
             {
-                test: /\.less$/,
+                test: /\.scss$/,
                 use: [{
                     loader: "style-loader"
                 }, {
@@ -28,7 +28,7 @@ module.exports = {
                         sourceMap: true
                     }
                 }, {
-                    loader: "less-loader", options: {
+                    loader: "sass-loader", options: {
                         sourceMap: true
                     }
                 }]
@@ -61,7 +61,7 @@ module.exports = {
     },
     devServer: {
         host: 'localhost',
-        port: 3000,
+        port: 3001,
         contentBase: path.resolve(__dirname, "./dist"),
         publicPath: path.resolve(__dirname, "./dist"),
         historyApiFallback: true,
