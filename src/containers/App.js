@@ -1,21 +1,20 @@
 import React, { Component } from 'react';
+import {configureStore} from '../stores/store';
+import { Provider } from 'react-redux';
 
-import Login from './Login'
-import MainPage from './MainPage'
+import Main from './Main'
 
-import TopBar from '../components/TopBar'
+
+let store = configureStore();
 
 class App extends Component {
     render() {
         return (
-            <div>
-                <TopBar />
-                <Login />
-                <MainPage />
-            </div>
+            <Provider store={store}>
+                <Main/>
+            </Provider>
         )
     }
 }
 
-
-export default App
+export default App;

@@ -4,10 +4,9 @@ import login from '../reducers/login'
 
 const loggerMiddleware = createLogger()
 
-export default function configureStore(preloadedState) {
+export const configureStore = () => {
     return createStore(
         login,
-        preloadedState,
         applyMiddleware(
             loggerMiddleware
         )

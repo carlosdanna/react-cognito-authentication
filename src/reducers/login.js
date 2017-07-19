@@ -1,9 +1,9 @@
 const login = (state = {}, action) => {
     switch (action.type) {
         case "LOGIN":
-            return {}
+            return Object.assign({}, state, { isLogged: true })
         case "LOGOUT":
-            return {}
+            return Object.assign({}, state, { isLogged: false })
         default:
             return state
     }
