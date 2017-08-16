@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Button, Checkbox, Form } from 'semantic-ui-react'
+import { Button, Checkbox, Form, Grid } from 'semantic-ui-react'
 
 import { connect } from 'react-redux';
 import { login } from '../actions/index';
@@ -11,24 +11,33 @@ class Login extends Component {
     }
     sendLogin(e) {
         e.preventDefault();
-        this.props.login();
+        let userData = {
+            username: this.username,
+            password: this.password
+        }
+        this.props.login(userData);
     }
     render() {
         return (
-            <Form>
-                <Form.Field>
-                    <label>First Name</label>
-                    <input placeholder='First Name' />
-                </Form.Field>
-                <Form.Field>
-                    <label>Last Name</label>
-                    <input placeholder='Last Name' />
-                </Form.Field>
-                <Form.Field>
-                    <Checkbox label='I agree to the Terms and Conditions' />
-                </Form.Field>
-                <Button type='submit' onClick={this.sendLogin}>Submit</Button>
-            </Form>
+            <Grid >
+                <Form>
+                <h1>Login</h1>
+                    <Form.Field>
+                        <Grid.Row>
+                            <label>Email</label>
+                            <input placeholder='Email' type="email" onChange={(e)=>{this.username = e.target.value}}/>
+                        </Grid.Row>
+                    </Form.Field>
+                    <Form.Field>
+                        <Grid.Row>
+                            <label>Password</label>
+                            <input placeholder='Password' type='password' onChange={(e)=>{this.password = e.target.value}}/>
+                        </Grid.Row>
+                    </Form.Field>
+
+                    <Button type='submit' onClick={this.sendLogin}>Login</Button>
+                </Form>
+            </Grid>
         )
     }
 }

@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import { logout } from '../actions/index';
+import {
+    Button, Container, Menu
+} from 'semantic-ui-react'
 
 class TopBar extends Component {
     constructor(props) {
@@ -15,15 +18,17 @@ class TopBar extends Component {
     render() {
         let login = null
         if (this.props.isLogged) {
-            login = (<button onClick={this.logout}>Logout</button>)
+            login = (<Menu.Item position="right" onClick={this.logout}>Logout</Menu.Item>)
         } else {
-            login = (<button>login</button>)
+            login = (<Menu.Item position="right">login</Menu.Item>)
         }
         return (
-            <div className="navBar">
-                Topbar
-                {login}
-            </div>
+                <Menu stackable>
+                    <Menu.Item>Home</Menu.Item>
+                    {login}
+                </Menu>
+                
+                
         )
     }
 }

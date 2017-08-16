@@ -1,5 +1,5 @@
 {
-  "name": "ck2-mods",
+  "name": "react-cognito-authentication",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -10,6 +10,7 @@
   "author": "Carlos Danna",
   "license": "ISC",
   "dependencies": {
+    "amazon-cognito-identity-js": "^1.19.0",
     "jest": "^20.0.4",
     "prop-types": "^15.5.10",
     "react": "^15.6.1",
@@ -19,6 +20,7 @@
     "react-router-dom": "^4.1.1",
     "redux": "^3.7.2",
     "redux-logger": "^3.0.6",
+    "redux-thunk": "^2.2.0",
     "semantic-ui-css": "^2.2.11",
     "semantic-ui-react": "^0.71.0"
   },
