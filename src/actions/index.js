@@ -5,7 +5,47 @@ let poolData = {
     ClientId: '303ksft0keavlha75pb73aq2c6' // Your client id here
 };
 let userPool = new CognitoUserPool(poolData);
-let cognitoUser = null;
+let cognitoUser = userPool.getCurrentUser();
+
+
+export const  getCurrentUserConfirmation = (bool) => {
+    return {
+        type: "CURRENT_USER_LOADING",
+        isLoading: bool
+    }
+}
+
+export const  getCurrentUserHasErrored = (bool) => {
+    return {
+        type: "CURRENT_USER_HAS_ERROR",
+        hasErrored: bool
+    }
+}
+
+export const  getCurrentUserSuccess = (session) => {
+    return {
+        type: "CURRENT_USER_SUCCESS",
+        session
+    }
+}
+
+export const getCurrentUserFetch = (dispatch) => {
+    return (dispatch) => {
+        dispatch(getCurrentUserConfirmation(true))
+        if (cognitoUser != null) {
+            cognitoUser.getSession(function (err, session) {
+                dispatch(getCurrentUserConfirmation(false))
+                if (err) {
+                    dispatch(getCurrentUserHasErrored(true))
+                }
+                dispatch(getCurrentUserSuccess(session.isValid()));
+            });
+        }else{
+            dispatch(getCurrentUserConfirmation(false))
+            return dispatch(getCurrentUserSuccess(false))
+        }
+    }
+}
 
 export const loginConfirmation = (bool) => {
     return {
@@ -47,7 +87,8 @@ export const loginFetch = (data) => {
         cognitoUser.authenticateUser(authenticationDetails, {
             onSuccess: (result) => {
                 dispatch(loginConfirmation(false));
-                dispatch(loginSuccess(result))
+                dispatch(loginSuccess(result));
+                dispatch(getCurrentUserFetch());
             },
             onFailure: (err) => {
                 dispatch(loginConfirmation(false));
@@ -62,8 +103,9 @@ export const loginFetch = (data) => {
 
 
 export const logout = () => {
+    cognitoUser.signOut();
     return {
-        type: "LOGOUT"
+        type: 'LOGOUT',
     }
 }
 

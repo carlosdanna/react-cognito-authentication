@@ -3,7 +3,7 @@ const login = (state = {}, action) => {
         case "LOGIN_HAS_ERROR":
             return Object.assign({}, state, { hasError: action.hasErrored })
         case "LOGIN_SUCCESS":
-            return Object.assign({}, state, { userData: action.userData })
+            return Object.assign({}, state, { userData: action.userData.isValid })
         case "LOGIN_LOADING":
             return Object.assign({}, state, {isLoading: action.isLoading})
         default:

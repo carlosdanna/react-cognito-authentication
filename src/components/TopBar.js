@@ -13,14 +13,14 @@ class TopBar extends Component {
     }
     logout(e) {
         e.preventDefault();
-        this.props.sendLogout()
+        this.props.logout()
     }
     render() {
         let login = null
-        if (this.props.isLogged) {
+        if (this.props.logged) {
             login = (<Menu.Item position="right" onClick={this.logout}>Logout</Menu.Item>)
         } else {
-            login = (<Menu.Item position="right">login</Menu.Item>)
+            login = (<Menu.Item position="right">Login</Menu.Item>)
         }
         return (
                 <Menu stackable>
@@ -32,18 +32,5 @@ class TopBar extends Component {
         )
     }
 }
-const mapStateToProps = (state, ownProps) => {
-    return {
-        isLogged: state.isLogged ? state.isLogged : false
-    }
-}
 
-const mapDispatchToProps = (dispatch, ownProps) => {
-    return {
-        sendLogout: () => {
-            dispatch(logout())
-        }
-    }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(TopBar)
+export default TopBar

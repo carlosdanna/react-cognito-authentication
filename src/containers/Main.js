@@ -9,19 +9,27 @@ import { Container } from 'semantic-ui-react'
 
 import TopBar from '../components/TopBar'
 
-import { confirmationFetch, signInFetch, loginFetch } from '../actions/index'
+import { confirmationFetch, signInFetch, loginFetch, getCurrentUserFetch, logout } from '../actions/index'
 
 class App extends Component {
+    componentDidMount() {
+        this.props.getCurrentUser();
+    }
     render() {
         let loginElement = null;
-        if (this.props.isLogged) { loginElement = null }
-        else { loginElement = <Login login={this.props.sendLogin} /> }
-        return (
-            <Container >
-                <TopBar logged={this.props.isLogged} />
-                {loginElement}
+        if (this.props.session) { loginElement = null }
+        else {
+            loginElement = (<div>
+                <Login login={this.props.sendLogin} />
                 <Signin signin={this.props.sendSignIn} />
                 <VerifyAccount sendConfirmation={this.props.sendConfirmation} />
+            </div>
+            )
+        }
+        return (
+            <Container >
+                <TopBar logged={this.props.session} logout={this.props.logout} />
+                {loginElement}
             </Container>
         )
     }
@@ -29,7 +37,7 @@ class App extends Component {
 
 const mapStateToProps = (state, ownProps) => {
     return {
-        isLogged: state.isLogged ? state.isLogged : false
+        session: state.currentUser.session ? state.currentUser.session : false
     }
 }
 const mapDispatchToProps = (dispatch, ownProps) => {
@@ -42,7 +50,14 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         },
         sendConfirmation: (data) => {
             dispatch(confirmationFetch(data))
+        },
+        getCurrentUser: () => {
+            dispatch(getCurrentUserFetch())
+        },
+        logout: ()=>{
+            dispatch(logout());
         }
+
 
     }
 }
