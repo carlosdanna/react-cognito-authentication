@@ -1,4 +1,5 @@
 import { CognitoUserPool, CognitoUserAttribute, CognitoUser, AuthenticationDetails } from 'amazon-cognito-identity-js';
+import jwtDecode from 'jwt-decode'
 
 let poolData = {
     UserPoolId: 'us-east-1_3Zh1cIsyB', // Your user pool id here
@@ -6,7 +7,6 @@ let poolData = {
 };
 let userPool = new CognitoUserPool(poolData);
 let cognitoUser = userPool.getCurrentUser();
-
 
 export const  getCurrentUserConfirmation = (bool) => {
     return {
@@ -34,6 +34,9 @@ export const getCurrentUserFetch = (dispatch) => {
         dispatch(getCurrentUserConfirmation(true))
         if (cognitoUser != null) {
             cognitoUser.getSession(function (err, session) {
+                console.log(session)
+                console.log(jwtDecode(session.idToken.jwtToken));
+
                 dispatch(getCurrentUserConfirmation(false))
                 if (err) {
                     dispatch(getCurrentUserHasErrored(true))
@@ -71,8 +74,6 @@ export const loginSuccess = (userData) => {
 export const loginFetch = (data) => {
     return (dispatch) => {
         dispatch(loginConfirmation(true));
-        console.log(data);
-        console.log(poolData);
         var authenticationData = {
             Username: data.username,
             Password: data.password
@@ -193,4 +194,26 @@ export const signInFetch = (userData) => {
             dispatch(signInSuccess(result.user))
         });
     };
+}
+export const getUserGroupsFetch = () =>{
+    return (dispatch) => {
+        if(cognitoUser != null){
+            cognitoUser.getSession((err,session)=>{
+                var dataSession = jwtDecode(session.idToken.jwtToken);
+                console.log(dataSession);
+                var groups = dataSession['cognito:groups'];
+                console.log(groups)
+                dispatch(getUserGroups(groups))
+            })
+        }else{
+            dispatch(signinHasError(false))
+        }
+    }
+}
+
+export const getUserGroups = (groups) =>{
+    return {
+        type: "GET_USER_GROUPS",
+        groups
+    }
 }

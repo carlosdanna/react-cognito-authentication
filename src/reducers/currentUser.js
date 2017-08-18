@@ -6,6 +6,8 @@ export const currentUser = (state = {}, action) => {
             return Object.assign({}, state, { session: action.session })
         case "CURRENT_USER_LOADING":
             return Object.assign({}, state, { isLoading: action.isLoading })
+        case "GET_USER_GROUPS":
+            return Object.assign({}, state, { groups: action.groups })
         case "LOGOUT":
             return Object.assign({}, state, { session: false })
         default:

@@ -5,11 +5,11 @@ import Login from '../components/Login'
 import MainPage from './MainPage'
 import Signin from '../components/Signin'
 import VerifyAccount from '../components/VerifyAccount'
-import { Container } from 'semantic-ui-react'
+import { Container, Button } from 'semantic-ui-react'
 
 import TopBar from '../components/TopBar'
 
-import { confirmationFetch, signInFetch, loginFetch, getCurrentUserFetch, logout } from '../actions/index'
+import { confirmationFetch, signInFetch, loginFetch, getCurrentUserFetch, getUserGroupsFetch,logout } from '../actions/index'
 
 class App extends Component {
     componentDidMount() {
@@ -17,7 +17,9 @@ class App extends Component {
     }
     render() {
         let loginElement = null;
-        if (this.props.session) { loginElement = null }
+        if (this.props.session) { loginElement = (
+            <Button onClick={this.props.getUserGroupsFetch}>Get groups</Button>
+        ) }
         else {
             loginElement = (<div>
                 <Login login={this.props.sendLogin} />
@@ -53,6 +55,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         },
         getCurrentUser: () => {
             dispatch(getCurrentUserFetch())
+        },
+        getUserGroupsFetch: () =>{
+            dispatch(getUserGroupsFetch());
         },
         logout: ()=>{
             dispatch(logout());

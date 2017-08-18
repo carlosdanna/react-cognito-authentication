@@ -12,6 +12,7 @@
   "dependencies": {
     "amazon-cognito-identity-js": "^1.19.0",
     "jest": "^20.0.4",
+    "jwt-decode": "^2.2.0",
     "prop-types": "^15.5.10",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
@@ -37,6 +38,7 @@
     "file-loader": "^0.11.2",
     "image-webpack-loader": "^3.3.1",
     "path": "^0.12.7",
+    "redux-devtools-extension": "^2.13.2",
     "style-loader": "^0.18.2",
     "webpack": "^3.0.0",
     "webpack-dev-server": "^2.5.0"
